@@ -47,7 +47,7 @@ pipeline{
                     sh "mvn sonar:sonar"
                 }
             }
-        }  }
+        }  
         stage ("Build Docker Image"){
             steps{
                 script {
@@ -55,7 +55,7 @@ pipeline{
                 }
             }
         }
-        
+
         stage ("Push Docker Image"){
             steps{
                 script {
