@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label 'Built-In Node'
+        label 'tomas394'
     }
     tools {
         jdk 'JDK 11'
