@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label 'any'
+        label 'docker'
     }
     tools {
         jdk 'JDK 11'
