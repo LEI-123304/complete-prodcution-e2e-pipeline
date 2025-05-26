@@ -9,8 +9,8 @@ pipeline{
     environment {
         APP_NAME = "complete-prodcution-e2e-pipeline"
         RELEASE = "1.0.0"
-       // DOCKER_USER = "dmancloud"
-       // DOCKER_PASS = 'dockerhub'
+        DOCKER_USER = "dmancloud"
+        DOCKER_PASS = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
      //   JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
@@ -49,22 +49,16 @@ pipeline{
             }
         }  
         stage ("Build Docker Image"){
-            steps{
-                script {
-                    docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-                }
+            steps {
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
-
         stage ("Push Docker Image"){
-            steps{
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()
-                    }
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
+                    sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
                 }
-            }
-        }
 }
 }
     
