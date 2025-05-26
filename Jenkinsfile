@@ -28,7 +28,17 @@ pipeline{
             steps {
                 git branch: 'main', credentialsId: 'tomas394', url: 'https://github.com/tomas-carlos99/complete-prodcution-e2e-pipeline.git'
             }
+        }
 
+        stage("Build APPlication"){
+            steps {
+                sh "mvn clean package -DskipTests"
+            }
+        }
+        stage ("Test"){
+            steps{
+                sh "mvn test"
+            }
         }
     }
 }
