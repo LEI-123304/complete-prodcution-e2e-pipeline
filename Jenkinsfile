@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label 'tomas394'
+        label 'master'
     }
     tools {
         jdk 'JDK 11'
